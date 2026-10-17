@@ -6,6 +6,11 @@ Plain Windows PowerShell 5.1, no dependencies, no cloud, no license, no telemetr
 
 ![PCleaner icon](assets/PCleaner.png)
 
+| | |
+|---|---|
+| ![Health Check, dark theme](assets/screenshots/health-dark.png) | ![Custom Clean, light theme](assets/screenshots/clean-light.png) |
+| ![Driver Updater, dark theme](assets/screenshots/drivers-dark.png) | ![Performance, light theme](assets/screenshots/perf-light.png) |
+
 ## Install
 
 1. Download the latest `PCleaner-x.y.z.zip` from Releases and extract it anywhere.
