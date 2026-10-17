@@ -40,6 +40,7 @@ foreach ($item in 'src', 'config', 'installer', 'assets', 'docs', 'tests', 'buil
     if (Test-Path $from) { Copy-Item $from -Destination $stage -Recurse -Force }
 }
 Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zip -CompressionLevel Optimal
+Remove-Item $stage -Recurse -Force   # the zip is the artifact; keep dist\ tidy
 $hash = (Get-FileHash $zip -Algorithm SHA256).Hash
 Set-Content -Path "$zip.sha256" -Value "$hash  $(Split-Path $zip -Leaf)" -Encoding ASCII
 Write-Host "Release: $zip" -ForegroundColor Green
