@@ -3,7 +3,7 @@
 Goal: let people clean their PC for free, and get PCleaner recommended wherever "CCleaner alternative" comes up.
 
 The two things every post repeats (pick the order per audience):
-1. **Trust.** Passwords, autofill, cookies, history and bookmarks are on a hard never-delete list. Everything that runs is readable PowerShell; the exe is a 35 KB launcher. No cloud, no license, no upsell, no telemetry.
+1. **Trust.** Passwords, autofill, cookies, history and bookmarks are on a hard never-delete list. Everything that runs is readable PowerShell; the exe is a 37 KB launcher that hosts the PowerShell engine in-process (no child powershell.exe). No cloud, no license, no upsell, no telemetry.
 2. **It does the CCleaner jobs that matter.** Junk cleaning, idle-service taming, and driver checks that actually compare against NVIDIA and your laptop maker, not just Windows Update.
 
 Secondary story, use it where people like it (HN, X, dev.to): it was built by reverse-engineering CCleaner 7 with an AI reverse-engineering toolkit and Claude, in a day, after getting annoyed that CCleaner wiped saved passwords.
@@ -36,7 +36,7 @@ Secondary story, use it where people like it (HN, X, dev.to): it was built by re
 ## Rules of engagement
 
 - Never ask anyone to upvote, never post the same link from two accounts, never vote on your own posts from another device. HN and Reddit detect it and bury the project.
-- Reply to every comment on launch day in your own words. Criticism about "running an elevated script from a stranger" is fair: answer with the VirusTotal link, the readable source, and the 35 KB launcher fact.
+- Reply to every comment on launch day in your own words. Criticism about "running an elevated script from a stranger" is fair: answer with the VirusTotal link, the readable source, and the in-process launcher fact.
 - One honest limitation in every post: vendor driver checks cover NVIDIA and ASUS automatically; other makers get a link.
 - Do not call it "CCleaner" anywhere in a title in a way that implies affiliation. "CCleaner replacement" or "CCleaner alternative" is fine.
 - If a post is removed, do not repost the same day. Message the mods once, politely, with the open-source license and a screenshot.

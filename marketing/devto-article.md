@@ -25,7 +25,7 @@ Also in the logs: a "PC health" engine watching for slow boots, disk errors, Win
 
 Constraints I set myself: nothing to install, code anyone can read before running it elevated, and conservative defaults.
 
-That pointed at Windows PowerShell 5.1 for the engine and WPF (via `XamlReader`) for the window, both built into Windows. The two `.exe` files people double-click are 35 KB launchers compiled with the C# compiler that ships inside the .NET Framework. The layout is a straight clone of CCleaner's sidebar-and-page structure; the colours are black and silver with a light and a dark theme.
+That pointed at Windows PowerShell 5.1 for the engine and WPF (via `XamlReader`) for the window, both built into Windows. The two `.exe` files people double-click are 37 KB launchers compiled with the C# compiler that ships inside the .NET Framework; they host the PowerShell engine in-process instead of spawning a hidden powershell.exe, which is the pattern antivirus heuristics dislike. The layout is a straight clone of CCleaner's sidebar-and-page structure; the colours are black and silver with a light and a dark theme.
 
 Three parts:
 
