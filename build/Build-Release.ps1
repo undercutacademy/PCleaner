@@ -49,5 +49,8 @@ Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zip -Compression
 Remove-Item $stage -Recurse -Force   # the zip is the artifact; keep dist\ tidy
 $hash = (Get-FileHash $zip -Algorithm SHA256).Hash
 Set-Content -Path "$zip.sha256" -Value "$hash  $(Split-Path $zip -Leaf)" -Encoding ASCII
-Write-Host "Release: $zip" -ForegroundColor Green
-Write-Host "SHA256:  $hash"
+Write-Host "Portable zip: $zip" -ForegroundColor Green
+Write-Host "SHA256:       $hash"
+
+# Installer (Inno Setup). Skipped with a warning when ISCC is not installed.
+try { & (Join-Path $root 'build\Build-Installer.ps1') } catch { Write-Warning "Installer not built: $($_.Exception.Message)" }
