@@ -16,7 +16,7 @@ Attach `assets/screenshots/health-dark.png` (or a 10-second screen recording of 
 
 1.  How it was made: I reverse-engineered the installed CCleaner 7 with an AI RE toolkit + Claude. Turns out the cleaner is a 769-rule ini file, the driver updater ships your hardware IDs to a paid backend, and the "optimizer" is a program-sleeper. Rebuilt the good parts in a day.
 
-2.  What it will not do: registry "cleaning", cookies, history, autofill, passwords. Those are on a hard never-delete list in the engine. Everything it does run is readable PowerShell; there is not a single binary in the download, just scripts, and the zip scans 0 on VirusTotal.
+2.  What it will not do: registry "cleaning", cookies, history, autofill, passwords. Those are on a hard never-delete list in the engine. Everything it does run is readable PowerShell; there is not a single binary in the download, just scripts, and the zip scans 0/65 on VirusTotal: https://www.virustotal.com/gui/file/21011f960d227a67c9fd34fcf7cd4ad2a63c720158347f7b24b4d8703abc25b9
 
 3.  Driver check found a Wi-Fi driver two versions behind on my ASUS that Windows Update never mentioned. NVIDIA and ASUS are compared automatically, other makers get a link. Honest limit.
 

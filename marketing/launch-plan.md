@@ -13,7 +13,7 @@ Secondary story, use it where people like it (HN, X, dev.to): it was built by re
 - [x] Screenshots in the README (both themes)
 - [x] winget manifest written (`marketing/winget`); submission on hold until releases are code-signed, see `winget.md`
 - [ ] Apply to SignPath Foundation for free open-source code signing (`signpath-application.md`)
-- [ ] VirusTotal scan of `PCleaner-1.1.0.zip`, link added to README and release notes
+- [x] VirusTotal scan of `PCleaner-1.1.0.zip`: 0/65, https://www.virustotal.com/gui/file/21011f960d227a67c9fd34fcf7cd4ad2a63c720158347f7b24b4d8703abc25b9 (in README and release notes)
 - [ ] GitHub repo: add topics `windows`, `powershell`, `wpf`, `ccleaner-alternative`, `system-cleaner`, `driver-updater`; add the one-line description; enable Discussions
 - [ ] Pin the v1.1.0 release and make sure the zip downloads without a sign-in
 - [ ] Decide whose name goes on the MIT license line (currently "PCleaner authors")

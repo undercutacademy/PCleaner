@@ -31,7 +31,7 @@ Email `tim@majorgeeks.com` (human review, tested in a VM, must be free or fairly
     Download (zip, Setup.cmd inside; no executables): https://github.com/undercutacademy/PCleaner/releases/download/v1.1.0/PCleaner-1.1.0.zip
     SHA256: 7AEE81B26FA7C9DCB4030BFA093B7242BEC63CAE55605723BA55495337CA0BF6
     Source and README with screenshots: https://github.com/undercutacademy/PCleaner
-    VirusTotal: [link]
+    VirusTotal: https://www.virustotal.com/gui/file/21011f960d227a67c9fd34fcf7cd4ad2a63c720158347f7b24b4d8703abc25b9 (0/65)
 
     Requirements: Windows 10/11 with Windows PowerShell 5.1 (built in). Per-user install, listed in Settings > Apps.
     Silent install for your VM: powershell -NoProfile -ExecutionPolicy Bypass -File installer\Install-PCleaner.ps1 -Silent

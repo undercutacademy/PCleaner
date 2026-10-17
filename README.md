@@ -24,7 +24,7 @@ Prefer not to install? Double-click `PCleaner.cmd` to open the window straight f
 
 There are no executables in the download. `Setup.cmd` and `PCleaner.cmd` are two-line batch files
 that start the PowerShell scripts in `installer\` and `src\`, so every file in the zip is readable
-and the whole package scans clean on VirusTotal (link in the release notes). A compiled launcher
+and the whole package scans clean on VirusTotal ([0/65 for 1.1.0](https://www.virustotal.com/gui/file/21011f960d227a67c9fd34fcf7cd4ad2a63c720158347f7b24b4d8703abc25b9)). A compiled launcher
 exists in `build\` and will ship once releases are code-signed; unsigned tiny executables trip
 machine-learning antivirus heuristics even when they do nothing wrong.
 
