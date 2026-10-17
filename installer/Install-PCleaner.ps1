@@ -45,10 +45,12 @@ foreach ($dir in 'src', 'assets', 'installer', 'docs') {
     $from = Join-Path $source $dir
     if (Test-Path $from) { Copy-Item $from -Destination $InstallDir -Recurse -Force }
 }
-foreach ($file in 'VERSION', 'README.md', 'LICENSE', 'PCleaner.exe') {
+foreach ($file in 'VERSION', 'README.md', 'LICENSE', 'PCleaner.exe', 'PCleaner.cmd') {
     $from = Join-Path $source $file
     if (Test-Path $from) { Copy-Item $from -Destination $InstallDir -Force }
 }
+# A package without the compiled launcher (script-only release) must not leave an older exe behind.
+if (-not (Test-Path (Join-Path $source 'PCleaner.exe'))) { Remove-Item (Join-Path $InstallDir 'PCleaner.exe') -Force -ErrorAction SilentlyContinue }
 # Config: never overwrite a user's edited settings; ship the new defaults next to them.
 $cfgDir = Join-Path $InstallDir 'config'; New-Item -ItemType Directory -Path $cfgDir -Force | Out-Null
 foreach ($name in 'settings.json', 'rules.json') {
