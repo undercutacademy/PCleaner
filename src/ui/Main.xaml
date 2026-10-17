@@ -1,0 +1,531 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PCleaner" Width="1140" Height="740" MinWidth="980" MinHeight="640"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanResize"
+        Background="{DynamicResource BgBrush}" Foreground="{DynamicResource TextBrush}"
+        FontFamily="Segoe UI Variable Text, Segoe UI" FontSize="13.5"
+        UseLayoutRounding="True" SnapsToDevicePixels="True" TextOptions.TextFormattingMode="Ideal" TextOptions.TextRenderingMode="ClearType">
+  <WindowChrome.WindowChrome>
+    <WindowChrome CaptionHeight="44" ResizeBorderThickness="6" GlassFrameThickness="0" CornerRadius="0" UseAeroCaptionButtons="False"/>
+  </WindowChrome.WindowChrome>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="44"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!-- Title bar -->
+    <Grid Grid.Row="0" Background="{DynamicResource TitleBarBrush}">
+      <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="14,0,0,0">
+        <Image x:Name="LogoImage" Width="22" Height="22" Margin="0,0,10,0"/>
+        <TextBlock Text="PCleaner" FontFamily="Segoe UI Variable Display, Segoe UI" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource TitleBarTextBrush}" VerticalAlignment="Center"/>
+        <Border x:Name="AdminBadge" Margin="12,0,0,0" CornerRadius="9" Padding="8,2" Background="#22FFFFFF" VerticalAlignment="Center">
+          <TextBlock x:Name="AdminBadgeText" Text="Administrator" FontSize="11" Foreground="{DynamicResource TitleBarTextBrush}"/>
+        </Border>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" WindowChrome.IsHitTestVisibleInChrome="True">
+        <Button x:Name="BtnTheme" Style="{DynamicResource ChromeButton}" Content="&#xE708;" FontSize="14" ToolTip="Switch light / dark"/>
+        <Button x:Name="BtnMin" Style="{DynamicResource ChromeButton}" Content="&#xE921;"/>
+        <Button x:Name="BtnMax" Style="{DynamicResource ChromeButton}" Content="&#xE922;"/>
+        <Button x:Name="BtnClose" Style="{DynamicResource CloseButton}" Content="&#xE8BB;"/>
+      </StackPanel>
+    </Grid>
+
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="236"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+
+      <!-- Sidebar -->
+      <Border Grid.Column="0" Background="{DynamicResource SidebarBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0">
+        <DockPanel>
+          <StackPanel DockPanel.Dock="Bottom" Margin="24,0,24,18">
+            <TextBlock x:Name="VersionText" Text="Version 1.0.0" Style="{DynamicResource Faint}"/>
+            <TextBlock Text="Local. No cloud, no license." Style="{DynamicResource Faint}"/>
+          </StackPanel>
+          <StackPanel Margin="0,22,0,0">
+            <RadioButton x:Name="NavHealth"   Style="{DynamicResource NavButton}" Tag="&#xEB51;" Content="Health Check" IsChecked="True" GroupName="nav"/>
+            <RadioButton x:Name="NavClean"    Style="{DynamicResource NavButton}" Tag="&#xEA99;" Content="Custom Clean" GroupName="nav"/>
+            <RadioButton x:Name="NavPerf"     Style="{DynamicResource NavButton}" Tag="&#xEC4A;" Content="Performance" GroupName="nav"/>
+            <RadioButton x:Name="NavDrivers"  Style="{DynamicResource NavButton}" Tag="&#xE772;" Content="Driver Updater" GroupName="nav"/>
+            <RadioButton x:Name="NavReports"  Style="{DynamicResource NavButton}" Tag="&#xE9F9;" Content="Reports" GroupName="nav"/>
+            <RadioButton x:Name="NavSettings" Style="{DynamicResource NavButton}" Tag="&#xE713;" Content="Settings" GroupName="nav"/>
+          </StackPanel>
+        </DockPanel>
+      </Border>
+
+      <!-- Content -->
+      <Grid Grid.Column="1">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- ===== Health Check ===== -->
+        <Grid x:Name="PageHealth" Grid.Row="0" Margin="44,40,44,24">
+          <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+          <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="320"/></Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" VerticalAlignment="Center" MaxWidth="520" HorizontalAlignment="Left">
+              <TextBlock x:Name="HealthHeadline" Text="Your PC, kept in shape." Style="{DynamicResource Headline}"/>
+              <TextBlock x:Name="HealthSub" Margin="0,12,0,0" Style="{DynamicResource Muted}" Text="One scan looks for leftover junk, idle services eating CPU or memory, and driver updates from Windows Update. Nothing changes until you say so."/>
+              <TextBlock x:Name="HealthStatus" Margin="0,16,0,0" Style="{DynamicResource Body}" Foreground="{DynamicResource HighlightBrush}" FontWeight="SemiBold" Text=""/>
+              <StackPanel Orientation="Horizontal" Margin="0,26,0,0">
+                <Button x:Name="BtnAnalyze" Style="{DynamicResource PrimaryButton}" Content="Analyze" MinWidth="160"/>
+                <Button x:Name="BtnFix" Style="{DynamicResource SecondaryButton}" Content="Clean and optimize" Margin="12,0,0,0" MinWidth="190"/>
+              </StackPanel>
+              <TextBlock x:Name="HealthLastRun" Margin="0,18,0,0" Style="{DynamicResource Faint}" Text=""/>
+            </StackPanel>
+            <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="260" Height="260">
+              <Ellipse Stroke="{DynamicResource TrackBrush}" StrokeThickness="16" Margin="8"/>
+              <Path x:Name="RingArc" Stroke="{DynamicResource AccentBrush}" StrokeThickness="16" StrokeStartLineCap="Round" StrokeEndLineCap="Round" RenderTransformOrigin="0.5,0.5">
+                <Path.RenderTransform><RotateTransform x:Name="RingRotate" Angle="0"/></Path.RenderTransform>
+                <Path.Effect><DropShadowEffect x:Name="RingGlow" Color="#C9CED6" BlurRadius="18" ShadowDepth="0" Opacity="0.0"/></Path.Effect>
+              </Path>
+              <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock x:Name="RingValue" Text="--" FontFamily="Segoe UI Variable Display, Segoe UI" FontSize="40" FontWeight="SemiBold" HorizontalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
+                <TextBlock x:Name="RingLabel" Text="not scanned yet" Style="{DynamicResource Muted}" HorizontalAlignment="Center"/>
+              </StackPanel>
+            </Grid>
+          </Grid>
+          <UniformGrid Grid.Row="1" Columns="3" Margin="0,8,0,0">
+            <Border Style="{DynamicResource Card}" Margin="0,0,8,0">
+              <StackPanel>
+                <TextBlock Text="Junk to remove" Style="{DynamicResource Muted}"/>
+                <TextBlock x:Name="CardJunk" Text="--" Style="{DynamicResource Stat}" Margin="0,4,0,0"/>
+                <TextBlock x:Name="CardJunkSub" Text="temp files, dumps, caches" Style="{DynamicResource Faint}"/>
+              </StackPanel>
+            </Border>
+            <Border Style="{DynamicResource Card}" Margin="4,0,4,0">
+              <StackPanel>
+                <TextBlock Text="Idle hungry services" Style="{DynamicResource Muted}"/>
+                <TextBlock x:Name="CardServices" Text="--" Style="{DynamicResource Stat}" Margin="0,4,0,0"/>
+                <TextBlock x:Name="CardServicesSub" Text="above your CPU or memory limit" Style="{DynamicResource Faint}"/>
+              </StackPanel>
+            </Border>
+            <Border Style="{DynamicResource Card}" Margin="8,0,0,0">
+              <StackPanel>
+                <TextBlock Text="Driver updates" Style="{DynamicResource Muted}"/>
+                <TextBlock x:Name="CardDrivers" Text="--" Style="{DynamicResource Stat}" Margin="0,4,0,0"/>
+                <TextBlock x:Name="CardDriversSub" Text="offered by Windows Update" Style="{DynamicResource Faint}"/>
+              </StackPanel>
+            </Border>
+          </UniformGrid>
+        </Grid>
+
+        <!-- ===== Custom Clean ===== -->
+        <Grid x:Name="PageClean" Grid.Row="0" Margin="44,36,44,24" Visibility="Collapsed">
+          <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+          <Grid Grid.Row="0" Margin="0,0,0,18">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="0,0,24,0">
+              <TextBlock Text="Custom Clean" Style="{DynamicResource Headline}"/>
+              <TextBlock Style="{DynamicResource Muted}" Margin="0,6,0,0" Text="Tick what to clean. Browser rules only touch caches: passwords, autofill, cookies, history and bookmarks are never deleted. Rules for an open browser are skipped. Changes save instantly."/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+              <Button x:Name="BtnCleanAnalyze" Style="{DynamicResource SecondaryButton}" Content="Analyze"/>
+              <Button x:Name="BtnCleanRun" Style="{DynamicResource PrimaryButton}" Content="Run Cleaner" Margin="10,0,0,0"/>
+            </StackPanel>
+          </Grid>
+          <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="360"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <Border Style="{DynamicResource Card}" Padding="10" Margin="0,0,16,0">
+              <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="RulesPanel"/>
+              </ScrollViewer>
+            </Border>
+            <Border Grid.Column="1" Style="{DynamicResource Card}">
+              <Grid>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                <TextBlock x:Name="CleanResultsTitle" Text="Results" Style="{DynamicResource Title}"/>
+                <Grid Grid.Row="1" Margin="0,14,0,4">
+                  <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="110"/><ColumnDefinition Width="70"/><ColumnDefinition Width="90"/></Grid.ColumnDefinitions>
+                  <TextBlock Text="Rule" Style="{DynamicResource TableHeader}"/>
+                  <TextBlock Grid.Column="1" Text="Status" Style="{DynamicResource TableHeader}"/>
+                  <TextBlock Grid.Column="2" Text="Items" Style="{DynamicResource TableHeader}"/>
+                  <TextBlock Grid.Column="3" Text="Size" Style="{DynamicResource TableHeader}" HorizontalAlignment="Right"/>
+                </Grid>
+                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                  <StackPanel>
+                    <TextBlock x:Name="CleanEmpty" Style="{DynamicResource Muted}" Margin="0,12,0,0" Text="Run Analyze to see what each rule would remove."/>
+                    <ItemsControl x:Name="CleanTable">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <Border Style="{DynamicResource TableRow}">
+                            <Grid>
+                              <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="110"/><ColumnDefinition Width="70"/><ColumnDefinition Width="90"/></Grid.ColumnDefinitions>
+                              <TextBlock Text="{Binding Name}" Style="{DynamicResource Cell}" TextWrapping="Wrap"/>
+                              <TextBlock Grid.Column="1" Text="{Binding Status}" Style="{DynamicResource CellMuted}" TextWrapping="Wrap"/>
+                              <TextBlock Grid.Column="2" Text="{Binding Files}" Style="{DynamicResource CellMuted}"/>
+                              <TextBlock Grid.Column="3" Text="{Binding SizeText}" Style="{DynamicResource Cell}" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                            </Grid>
+                          </Border>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </StackPanel>
+                </ScrollViewer>
+              </Grid>
+            </Border>
+          </Grid>
+        </Grid>
+
+        <!-- ===== Performance ===== -->
+        <Grid x:Name="PagePerf" Grid.Row="0" Margin="44,36,44,24" Visibility="Collapsed">
+          <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+          <Grid Grid.Row="0" Margin="0,0,0,18">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="0,0,24,0" MaxWidth="640" HorizontalAlignment="Left">
+              <TextBlock Text="Performance" Style="{DynamicResource Headline}"/>
+              <TextBlock x:Name="PerfSub" Style="{DynamicResource Muted}" Margin="0,6,0,0" Text="Measures every service for 8 seconds. Idle services above your limits are stopped; they restart on their own when something needs them. Windows and security services are never touched."/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+              <Button x:Name="BtnPerfRevert" Style="{DynamicResource SmallButton}" Content="Revert changes" VerticalAlignment="Center" Margin="0,0,14,0"/>
+              <Button x:Name="BtnPerfScan" Style="{DynamicResource SecondaryButton}" Content="Scan"/>
+              <Button x:Name="BtnPerfRun" Style="{DynamicResource PrimaryButton}" Content="Optimize" Margin="10,0,0,0"/>
+            </StackPanel>
+          </Grid>
+          <Border Grid.Row="1" Style="{DynamicResource Card}" Margin="0,0,0,12">
+            <Grid>
+              <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+              <TextBlock x:Name="PerfTitle" Text="Services to stop" Style="{DynamicResource Title}"/>
+              <Grid Grid.Row="1" Margin="0,14,0,4">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="180"/><ColumnDefinition Width="*"/><ColumnDefinition Width="80"/><ColumnDefinition Width="90"/><ColumnDefinition Width="130"/></Grid.ColumnDefinitions>
+                <TextBlock Text="Service" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="1" Text="Why" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="2" Text="CPU %" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="3" Text="Memory" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="4" Text="Action" Style="{DynamicResource TableHeader}"/>
+              </Grid>
+              <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                  <TextBlock x:Name="PerfEmpty" Style="{DynamicResource Muted}" Margin="0,12,0,0" Text="Run Scan to measure services."/>
+                  <ItemsControl x:Name="PerfTable">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate>
+                        <Border Style="{DynamicResource TableRow}">
+                          <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="180"/><ColumnDefinition Width="*"/><ColumnDefinition Width="80"/><ColumnDefinition Width="90"/><ColumnDefinition Width="130"/></Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding DisplayName}" Style="{DynamicResource Cell}" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Reason}" Style="{DynamicResource CellMuted}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding CpuPercent}" Style="{DynamicResource Cell}"/>
+                            <TextBlock Grid.Column="3" Text="{Binding MemoryText}" Style="{DynamicResource Cell}"/>
+                            <TextBlock Grid.Column="4" Text="{Binding Action}" Style="{DynamicResource CellMuted}"/>
+                          </Grid>
+                        </Border>
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </StackPanel>
+              </ScrollViewer>
+            </Grid>
+          </Border>
+          <Border Grid.Row="2" Style="{DynamicResource Card}">
+            <Grid>
+              <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+              <TextBlock Text="Busiest processes during the scan" Style="{DynamicResource Title}"/>
+              <Grid Grid.Row="1" Margin="0,14,0,4">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="90"/><ColumnDefinition Width="80"/><ColumnDefinition Width="100"/></Grid.ColumnDefinitions>
+                <TextBlock Text="Process" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="1" Text="PID" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="2" Text="CPU %" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="3" Text="Memory" Style="{DynamicResource TableHeader}"/>
+              </Grid>
+              <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                <ItemsControl x:Name="ProcTable">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <Border Style="{DynamicResource TableRow}">
+                        <Grid>
+                          <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="90"/><ColumnDefinition Width="80"/><ColumnDefinition Width="100"/></Grid.ColumnDefinitions>
+                          <TextBlock Text="{Binding Name}" Style="{DynamicResource Cell}"/>
+                          <TextBlock Grid.Column="1" Text="{Binding Pid}" Style="{DynamicResource CellMuted}"/>
+                          <TextBlock Grid.Column="2" Text="{Binding CpuPercent}" Style="{DynamicResource Cell}"/>
+                          <TextBlock Grid.Column="3" Text="{Binding MemoryText}" Style="{DynamicResource Cell}"/>
+                        </Grid>
+                      </Border>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </ScrollViewer>
+            </Grid>
+          </Border>
+        </Grid>
+
+        <!-- ===== Driver Updater ===== -->
+        <Grid x:Name="PageDrivers" Grid.Row="0" Margin="44,36,44,24" Visibility="Collapsed">
+          <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="5*"/><RowDefinition Height="4*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+          <Grid Grid.Row="0" Margin="0,0,0,18">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="0,0,24,0" MaxWidth="640" HorizontalAlignment="Left">
+              <TextBlock Text="Driver Updater" Style="{DynamicResource Headline}"/>
+              <TextBlock Style="{DynamicResource Muted}" Margin="0,6,0,0" Text="Compares your installed drivers with NVIDIA and your laptop maker, then asks Windows Update as well. Vendor downloads open in your browser; Windows Update drivers can be installed after a restore point."/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+              <Button x:Name="BtnDrvScan" Style="{DynamicResource SecondaryButton}" Content="Scan"/>
+              <Button x:Name="BtnDrvInstall" Style="{DynamicResource PrimaryButton}" Content="Install Windows Update drivers" Margin="10,0,0,0"/>
+            </StackPanel>
+          </Grid>
+          <Border Grid.Row="1" Style="{DynamicResource Card}" Margin="0,0,0,12">
+            <Grid>
+              <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+              <TextBlock x:Name="VendorTitle" Text="Vendor checks" Style="{DynamicResource Title}"/>
+              <Grid Grid.Row="1" Margin="0,14,0,4">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="80"/><ColumnDefinition Width="120"/><ColumnDefinition Width="120"/><ColumnDefinition Width="130"/><ColumnDefinition Width="100"/></Grid.ColumnDefinitions>
+                <TextBlock Text="Component" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="1" Text="Source" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="2" Text="Installed" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="3" Text="Latest" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="4" Text="Status" Style="{DynamicResource TableHeader}"/>
+              </Grid>
+              <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                  <TextBlock x:Name="VendorEmpty" Style="{DynamicResource Muted}" Margin="0,12,0,0" Text="Run Scan to compare with NVIDIA and your laptop maker."/>
+                  <ItemsControl x:Name="VendorTable">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate>
+                        <Border Style="{DynamicResource TableRow}">
+                          <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="80"/><ColumnDefinition Width="120"/><ColumnDefinition Width="120"/><ColumnDefinition Width="130"/><ColumnDefinition Width="100"/></Grid.ColumnDefinitions>
+                            <StackPanel>
+                              <TextBlock Text="{Binding Component}" Style="{DynamicResource Cell}" FontWeight="SemiBold"/>
+                              <TextBlock Text="{Binding Note}" Style="{DynamicResource CellMuted}" FontSize="11.5"/>
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Text="{Binding Source}" Style="{DynamicResource CellMuted}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Installed}" Style="{DynamicResource CellMuted}"/>
+                            <TextBlock Grid.Column="3" Text="{Binding Latest}" Style="{DynamicResource Cell}"/>
+                            <TextBlock Grid.Column="4" Text="{Binding Status}" Style="{DynamicResource Cell}" Foreground="{Binding StatusBrush}" FontWeight="SemiBold"/>
+                            <Button Grid.Column="5" Style="{DynamicResource SmallButton}" Content="{Binding ButtonText}" Tag="{Binding Url}" HorizontalAlignment="Right" Visibility="{Binding ButtonVisibility}"/>
+                          </Grid>
+                        </Border>
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </StackPanel>
+              </ScrollViewer>
+            </Grid>
+          </Border>
+          <Border Grid.Row="2" Style="{DynamicResource Card}" Margin="0,0,0,12">
+            <Grid>
+              <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+              <TextBlock x:Name="DrvTitle" Text="Windows Update" Style="{DynamicResource Title}"/>
+              <Grid Grid.Row="1" Margin="0,14,0,4">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="160"/><ColumnDefinition Width="110"/><ColumnDefinition Width="100"/><ColumnDefinition Width="70"/></Grid.ColumnDefinitions>
+                <TextBlock Text="Driver" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="1" Text="Provider" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="2" Text="Class" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="3" Text="Date" Style="{DynamicResource TableHeader}"/>
+                <TextBlock Grid.Column="4" Text="Size" Style="{DynamicResource TableHeader}"/>
+              </Grid>
+              <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                  <TextBlock x:Name="DrvEmpty" Style="{DynamicResource Muted}" Margin="0,12,0,0" Text="Run Scan to check Windows Update."/>
+                  <ItemsControl x:Name="DrvTable">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate>
+                        <Border Style="{DynamicResource TableRow}">
+                          <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="160"/><ColumnDefinition Width="110"/><ColumnDefinition Width="100"/><ColumnDefinition Width="70"/></Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Title}" Style="{DynamicResource Cell}" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Provider}" Style="{DynamicResource CellMuted}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Class}" Style="{DynamicResource CellMuted}"/>
+                            <TextBlock Grid.Column="3" Text="{Binding Version}" Style="{DynamicResource CellMuted}"/>
+                            <TextBlock Grid.Column="4" Text="{Binding SizeText}" Style="{DynamicResource CellMuted}"/>
+                          </Grid>
+                        </Border>
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </StackPanel>
+              </ScrollViewer>
+            </Grid>
+          </Border>
+          <Grid Grid.Row="3" MaxHeight="150">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <Border Style="{DynamicResource Card}" Margin="0,0,6,0">
+              <Grid>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                <TextBlock x:Name="DrvProblemsTitle" Text="Devices with problems" Style="{DynamicResource Title}"/>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,10,0,0">
+                  <StackPanel>
+                    <TextBlock x:Name="DrvProblemsEmpty" Style="{DynamicResource Muted}" Text="None found."/>
+                    <ItemsControl x:Name="DrvProblemsTable">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <Border Style="{DynamicResource TableRow}">
+                            <StackPanel>
+                              <TextBlock Text="{Binding FriendlyName}" Style="{DynamicResource Cell}" FontWeight="SemiBold"/>
+                              <TextBlock Text="{Binding Status}" Style="{DynamicResource CellMuted}"/>
+                            </StackPanel>
+                          </Border>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </StackPanel>
+                </ScrollViewer>
+              </Grid>
+            </Border>
+            <Border Grid.Column="1" Style="{DynamicResource Card}" Margin="6,0,0,0">
+              <Grid>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                <TextBlock x:Name="DrvOldTitle" Text="Older vendor drivers" Style="{DynamicResource Title}"/>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,10,0,0">
+                  <StackPanel>
+                    <TextBlock x:Name="DrvOldEmpty" Style="{DynamicResource Muted}" Text="None past the age limit."/>
+                    <ItemsControl x:Name="DrvOldTable">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <Border Style="{DynamicResource TableRow}">
+                            <Grid>
+                              <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="70"/></Grid.ColumnDefinitions>
+                              <StackPanel>
+                                <TextBlock Text="{Binding DeviceName}" Style="{DynamicResource Cell}" FontWeight="SemiBold"/>
+                                <TextBlock Text="{Binding Detail}" Style="{DynamicResource CellMuted}"/>
+                              </StackPanel>
+                              <TextBlock Grid.Column="1" Text="{Binding AgeText}" Style="{DynamicResource Cell}" HorizontalAlignment="Right"/>
+                            </Grid>
+                          </Border>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </StackPanel>
+                </ScrollViewer>
+              </Grid>
+            </Border>
+          </Grid>
+        </Grid>
+
+        <!-- ===== Reports ===== -->
+        <Grid x:Name="PageReports" Grid.Row="0" Margin="44,36,44,24" Visibility="Collapsed">
+          <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+          <Grid Margin="0,0,0,18">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="0,0,24,0">
+              <TextBlock Text="Reports" Style="{DynamicResource Headline}"/>
+              <TextBlock Style="{DynamicResource Muted}" Margin="0,6,0,0" Text="Every run leaves an HTML report and a log. The last 20 are kept."/>
+            </StackPanel>
+            <Button x:Name="BtnReportsFolder" Grid.Column="1" Style="{DynamicResource SecondaryButton}" Content="Open folder" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+          </Grid>
+          <Border Grid.Row="1" Style="{DynamicResource Card}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+              <StackPanel>
+                <TextBlock x:Name="ReportsEmpty" Style="{DynamicResource Muted}" Text="No reports yet."/>
+                <ItemsControl x:Name="ReportsTable">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <Border Style="{DynamicResource TableRow}">
+                        <Grid>
+                          <Grid.ColumnDefinitions><ColumnDefinition Width="200"/><ColumnDefinition Width="*"/><ColumnDefinition Width="110"/></Grid.ColumnDefinitions>
+                          <TextBlock Text="{Binding When}" Style="{DynamicResource Cell}" FontWeight="SemiBold"/>
+                          <TextBlock Grid.Column="1" Text="{Binding Summary}" Style="{DynamicResource CellMuted}"/>
+                          <Button Grid.Column="2" Style="{DynamicResource SmallButton}" Content="Open" Tag="{Binding Path}" HorizontalAlignment="Right"/>
+                        </Grid>
+                      </Border>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+            </ScrollViewer>
+          </Border>
+        </Grid>
+
+        <!-- ===== Settings ===== -->
+        <ScrollViewer x:Name="PageSettings" Grid.Row="0" Margin="44,36,44,24" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+          <StackPanel MaxWidth="760" HorizontalAlignment="Left">
+            <TextBlock Text="Settings" Style="{DynamicResource Headline}"/>
+            <Border Style="{DynamicResource Card}" Margin="0,22,0,12">
+              <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <StackPanel>
+                  <TextBlock Text="Appearance" Style="{DynamicResource Title}"/>
+                  <TextBlock Text="Follow Windows, or pick a side." Style="{DynamicResource Muted}" Margin="0,4,0,0"/>
+                </StackPanel>
+                <Border Grid.Column="1" Background="{DynamicResource BgBrush}" CornerRadius="10" VerticalAlignment="Center">
+                  <StackPanel Orientation="Horizontal">
+                    <RadioButton x:Name="ThemeSystem" Style="{DynamicResource Segment}" Content="System" GroupName="theme"/>
+                    <RadioButton x:Name="ThemeLight" Style="{DynamicResource Segment}" Content="Light" GroupName="theme"/>
+                    <RadioButton x:Name="ThemeDark" Style="{DynamicResource Segment}" Content="Dark" GroupName="theme"/>
+                  </StackPanel>
+                </Border>
+              </Grid>
+            </Border>
+            <Border Style="{DynamicResource Card}" Margin="0,0,0,12">
+              <StackPanel>
+                <Grid>
+                  <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                  <StackPanel>
+                    <TextBlock Text="Weekly maintenance" Style="{DynamicResource Title}"/>
+                    <TextBlock x:Name="SchedStatus" Text="" Style="{DynamicResource Muted}" Margin="0,4,0,0"/>
+                  </StackPanel>
+                  <CheckBox x:Name="SchedSwitch" Grid.Column="1" Style="{DynamicResource Switch}" VerticalAlignment="Center"/>
+                </Grid>
+                <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                  <Border Background="{DynamicResource BgBrush}" CornerRadius="10" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                      <RadioButton x:Name="Day1" Style="{DynamicResource Segment}" Content="Mon" GroupName="day" Padding="12,7"/>
+                      <RadioButton x:Name="Day2" Style="{DynamicResource Segment}" Content="Tue" GroupName="day" Padding="12,7"/>
+                      <RadioButton x:Name="Day3" Style="{DynamicResource Segment}" Content="Wed" GroupName="day" Padding="12,7"/>
+                      <RadioButton x:Name="Day4" Style="{DynamicResource Segment}" Content="Thu" GroupName="day" Padding="12,7"/>
+                      <RadioButton x:Name="Day5" Style="{DynamicResource Segment}" Content="Fri" GroupName="day" Padding="12,7"/>
+                      <RadioButton x:Name="Day6" Style="{DynamicResource Segment}" Content="Sat" GroupName="day" Padding="12,7"/>
+                      <RadioButton x:Name="Day0" Style="{DynamicResource Segment}" Content="Sun" GroupName="day" Padding="12,7"/>
+                    </StackPanel>
+                  </Border>
+                  <TextBox x:Name="SchedTime" Style="{DynamicResource Input}" Width="90" Margin="10,0,0,0" Text="10:00" VerticalAlignment="Center"/>
+                  <Button x:Name="BtnSchedApply" Style="{DynamicResource SmallButton}" Content="Apply" Margin="10,0,0,0"/>
+                </StackPanel>
+                <TextBlock Style="{DynamicResource Faint}" Margin="0,10,0,0" Text="Runs as you with administrator rights. If the laptop is asleep or off, it runs at the next sign-in."/>
+              </StackPanel>
+            </Border>
+            <Border Style="{DynamicResource Card}" Margin="0,0,0,12">
+              <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <StackPanel>
+                  <TextBlock Text="Notifications" Style="{DynamicResource Title}"/>
+                  <TextBlock Text="Show a Windows notification with the summary after each run." Style="{DynamicResource Muted}" Margin="0,4,0,0"/>
+                </StackPanel>
+                <CheckBox x:Name="ToastSwitch" Grid.Column="1" Style="{DynamicResource Switch}" VerticalAlignment="Center"/>
+              </Grid>
+            </Border>
+            <Border Style="{DynamicResource Card}" Margin="0,0,0,12">
+              <StackPanel>
+                <TextBlock Text="Advanced" Style="{DynamicResource Title}"/>
+                <TextBlock Text="Thresholds, protected services and cleaning rules live in two JSON files." Style="{DynamicResource Muted}" Margin="0,4,0,0"/>
+                <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                  <Button x:Name="BtnEditSettings" Style="{DynamicResource SmallButton}" Content="Edit settings.json"/>
+                  <Button x:Name="BtnEditRules" Style="{DynamicResource SmallButton}" Content="Edit rules.json" Margin="8,0,0,0"/>
+                  <Button x:Name="BtnOpenData" Style="{DynamicResource SmallButton}" Content="Open data folder" Margin="8,0,0,0"/>
+                </StackPanel>
+              </StackPanel>
+            </Border>
+            <Border Style="{DynamicResource Card}">
+              <StackPanel>
+                <TextBlock Text="About" Style="{DynamicResource Title}"/>
+                <TextBlock x:Name="AboutText" Style="{DynamicResource Muted}" Margin="0,4,0,0" Text=""/>
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </ScrollViewer>
+
+        <!-- ===== Run strip (shared) ===== -->
+        <Border x:Name="RunStrip" Grid.Row="1" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="28,14" Visibility="Collapsed">
+          <Grid>
+            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+            <Grid>
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+              <TextBlock x:Name="RunStatus" Style="{DynamicResource Body}" FontWeight="SemiBold" Text="Working..."/>
+              <Button x:Name="BtnRunDetails" Grid.Column="1" Style="{DynamicResource SmallButton}" Content="Show details" Margin="12,0,0,0"/>
+              <Button x:Name="BtnRunClose" Grid.Column="2" Style="{DynamicResource SmallButton}" Content="Hide" Margin="8,0,0,0" Visibility="Collapsed"/>
+            </Grid>
+            <ProgressBar x:Name="RunProgress" Grid.Row="1" Style="{DynamicResource ThinProgress}" Minimum="0" Maximum="100" Value="0" Margin="0,10,0,0"/>
+            <Border Grid.Row="2" x:Name="RunLogWrap" Visibility="Collapsed" Margin="0,12,0,0" CornerRadius="8" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+              <TextBox x:Name="RunLog" Style="{DynamicResource LogBox}" Height="170"/>
+            </Border>
+          </Grid>
+        </Border>
+      </Grid>
+    </Grid>
+  </Grid>
+</Window>

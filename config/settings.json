@@ -1,0 +1,49 @@
+{
+  "schedule": {
+    "day": "Sunday",
+    "time": "10:00"
+  },
+  "clean": {
+    "enabled": true,
+    "recycleBinOlderThanDays": 7,
+    "disabledRules": []
+  },
+  "drivers": {
+    "enabled": true,
+    "checkWindowsUpdate": true,
+    "vendorChecks": true,
+    "installUpdates": false,
+    "createRestorePointBeforeInstall": true,
+    "maxDriverAgeYears": 3,
+    "classesOfInterest": ["Display", "Net", "Media", "Bluetooth", "System", "USB", "HIDClass", "Battery", "Monitor"]
+  },
+  "services": {
+    "enabled": true,
+    "sampleSeconds": 8,
+    "cpuPercentThreshold": 3.0,
+    "memoryMBThreshold": 150,
+    "stopIdleManualServices": true,
+    "optionalAutoServices": [],
+    "setOptionalAutoToManual": false,
+    "alwaysStop": [],
+    "neverTouch": [
+      "WinDefend", "MDCoreSvc", "WdNisSvc", "Sense", "SecurityHealthService", "wscsvc",
+      "wuauserv", "BITS", "UsoSvc", "DoSvc", "CryptSvc", "TrustedInstaller", "msiserver",
+      "Audiosrv", "AudioEndpointBuilder", "Dhcp", "Dnscache", "NlaSvc", "netprofm", "WlanSvc", "bthserv", "BthAvctpSvc",
+      "EventLog", "Power", "Winmgmt", "RpcSs", "RpcEptMapper", "DcomLaunch", "LSM", "SamSs", "Schedule",
+      "ProfSvc", "UserManager", "Themes", "ShellHWDetection", "SysMain", "WSearch", "LanmanWorkstation", "LanmanServer",
+      "TermService", "Spooler", "PlugPlay", "DeviceInstall", "StateRepository", "TimeBrokerSvc", "SystemEventsBroker",
+      "CoreMessagingRegistrar", "DisplayEnhancementService", "camsvc", "TabletInputService", "TextInputManagementService",
+      "OneSyncSvc", "WpnService", "WpnUserService", "cbdhsvc", "CDPSvc", "CDPUserSvc", "Appinfo", "gpsvc", "nsi",
+      "Wcmsvc", "WinHttpAutoProxySvc", "iphlpsvc", "mpssvc", "BFE", "KeyIso", "VaultSvc", "Netman", "WdiServiceHost",
+      "WdiSystemHost", "DPS", "SENS", "EventSystem", "FontCache", "StorSvc", "vds", "VSS", "swprv", "sppsvc",
+      "ClipSVC", "LicenseManager", "InstallService", "AppXSvc", "wlidsvc", "TokenBroker", "WebClient", "SstpSvc",
+      "RasMan", "IKEEXT", "PolicyAgent", "NcbService", "LxpSvc", "TrkWks", "hidserv", "WbioSrvc", "NgcSvc", "NgcCtnrSvc",
+      "WEPHOSTSVC", "EFS", "lmhosts", "fdPHost", "FDResPub", "SSDPSRV", "upnphost", "DusmSvc"
+    ]
+  },
+  "report": {
+    "keepReports": 20,
+    "toast": true
+  }
+}

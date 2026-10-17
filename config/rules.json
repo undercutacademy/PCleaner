@@ -1,0 +1,227 @@
+{
+  "vars": {
+    "EDGE_PROFILES": "%LocalAppData%\\Microsoft\\Edge\\User Data\\Default,%LocalAppData%\\Microsoft\\Edge\\User Data\\Profile*",
+    "CHROME_PROFILES": "%LocalAppData%\\Google\\Chrome\\User Data\\Default,%LocalAppData%\\Google\\Chrome\\User Data\\Profile*",
+    "BRAVE_PROFILES": "%LocalAppData%\\BraveSoftware\\Brave-Browser\\User Data\\Default,%LocalAppData%\\BraveSoftware\\Brave-Browser\\User Data\\Profile*",
+    "FIREFOX_PROFILES": "%LocalAppData%\\Mozilla\\Firefox\\Profiles\\*,%AppData%\\Mozilla\\Firefox\\Profiles\\*"
+  },
+  "rules": [
+    {
+      "id": "windows.tempfiles",
+      "name": "Temporary files",
+      "group": "Windows",
+      "default": true,
+      "fileKeys": [
+        { "path": "%TEMP%", "patterns": ["*"], "recurse": true, "olderThanDays": 1 },
+        { "path": "%windir%\\Temp", "patterns": ["*"], "recurse": true, "olderThanDays": 1 },
+        { "path": "%windir%", "patterns": ["*.tmp"], "recurse": false }
+      ]
+    },
+    {
+      "id": "windows.memorydumps",
+      "name": "Memory dumps and crash dumps",
+      "group": "Windows",
+      "default": true,
+      "fileKeys": [
+        { "path": "%windir%", "patterns": ["memory.dmp"], "recurse": false },
+        { "path": "%windir%\\Minidump", "patterns": ["*.dmp"], "recurse": false },
+        { "path": "%windir%\\LiveKernelReports", "patterns": ["*.dmp"], "recurse": true },
+        { "path": "%LocalAppData%\\CrashDumps", "patterns": ["*.dmp"], "recurse": false }
+      ]
+    },
+    {
+      "id": "windows.chkdskfragments",
+      "name": "Chkdsk file fragments",
+      "group": "Windows",
+      "default": true,
+      "fileKeys": [
+        { "path": "%SystemDrive%\\", "patterns": ["File*.chk"], "recurse": false },
+        { "path": "%SystemDrive%\\found.*", "patterns": ["*"], "recurse": true, "removeSelf": true }
+      ]
+    },
+    {
+      "id": "windows.logfiles",
+      "name": "Windows log files",
+      "group": "Windows",
+      "default": true,
+      "fileKeys": [
+        { "path": "%windir%\\Logs", "patterns": ["*.log", "*.etl"], "recurse": true, "olderThanDays": 7 },
+        { "path": "%windir%\\Debug", "patterns": ["*.log"], "recurse": true, "olderThanDays": 7 },
+        { "path": "%windir%\\SoftwareDistribution", "patterns": ["*.log"], "recurse": false },
+        { "path": "%windir%\\SoftwareDistribution\\DataStore\\Logs", "patterns": ["*.log"], "recurse": false },
+        { "path": "%windir%\\Panther", "patterns": ["setupact.log", "setuperr.log"], "recurse": false },
+        { "path": "%LocalAppData%\\Microsoft\\Windows", "patterns": ["*.log"], "recurse": true, "olderThanDays": 7 }
+      ]
+    },
+    {
+      "id": "windows.errorreporting",
+      "name": "Windows Error Reporting queues",
+      "group": "Windows",
+      "default": true,
+      "fileKeys": [
+        { "path": "%ProgramData%\\Microsoft\\Windows\\WER\\ReportArchive", "patterns": ["*"], "recurse": true },
+        { "path": "%ProgramData%\\Microsoft\\Windows\\WER\\ReportQueue", "patterns": ["*"], "recurse": true },
+        { "path": "%ProgramData%\\Microsoft\\Windows\\WER\\Temp", "patterns": ["*"], "recurse": true },
+        { "path": "%LocalAppData%\\Microsoft\\Windows\\WER\\ReportArchive", "patterns": ["*"], "recurse": true },
+        { "path": "%LocalAppData%\\Microsoft\\Windows\\WER\\ReportQueue", "patterns": ["*"], "recurse": true },
+        { "path": "%LocalAppData%\\Microsoft\\Windows\\WER\\Temp", "patterns": ["*"], "recurse": true }
+      ]
+    },
+    {
+      "id": "windows.updatecache",
+      "name": "Windows Update download cache (older than 14 days)",
+      "group": "Windows",
+      "default": true,
+      "fileKeys": [
+        { "path": "%windir%\\SoftwareDistribution\\Download", "patterns": ["*"], "recurse": true, "olderThanDays": 14 }
+      ]
+    },
+    {
+      "id": "windows.webcache",
+      "name": "Windows web cache (INetCache)",
+      "group": "Windows",
+      "default": true,
+      "fileKeys": [
+        { "path": "%LocalAppData%\\Microsoft\\Windows\\INetCache", "patterns": ["*"], "recurse": true, "olderThanDays": 1 }
+      ]
+    },
+    {
+      "id": "windows.shadercache",
+      "name": "DirectX and GPU shader caches (games recompile shaders afterwards)",
+      "group": "Windows",
+      "default": false,
+      "fileKeys": [
+        { "path": "%LocalAppData%\\D3DSCache", "patterns": ["*"], "recurse": true },
+        { "path": "%LocalAppData%\\NVIDIA\\DXCache", "patterns": ["*"], "recurse": true },
+        { "path": "%LocalAppData%\\NVIDIA\\GLCache", "patterns": ["*"], "recurse": true },
+        { "path": "%LocalAppData%\\AMD\\DxCache", "patterns": ["*"], "recurse": true },
+        { "path": "%LocalAppData%\\Intel\\ShaderCache", "patterns": ["*"], "recurse": true }
+      ]
+    },
+    {
+      "id": "windows.widgets",
+      "name": "Windows Widgets web cache",
+      "group": "Windows",
+      "default": true,
+      "detectFile": "%LocalAppData%\\Packages\\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy",
+      "fileKeys": [
+        { "path": "%LocalAppData%\\Packages\\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy\\LocalState\\EBWebView\\Default\\Code Cache", "patterns": ["*"], "recurse": true },
+        { "path": "%LocalAppData%\\Packages\\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy\\LocalState\\EBWebView\\Default\\Service Worker\\CacheStorage", "patterns": ["*"], "recurse": true }
+      ]
+    },
+    {
+      "id": "windows.thumbnailcache",
+      "name": "Thumbnail cache (regenerates, slows Explorer briefly)",
+      "group": "Windows",
+      "default": false,
+      "fileKeys": [
+        { "path": "%LocalAppData%\\Microsoft\\Windows\\Explorer", "patterns": ["thumbcache_*.db"], "recurse": false }
+      ]
+    },
+    {
+      "id": "windows.oldprefetch",
+      "name": "Prefetch data older than 14 days",
+      "group": "Windows",
+      "default": false,
+      "fileKeys": [
+        { "path": "%windir%\\Prefetch", "patterns": ["*.pf"], "recurse": false, "olderThanDays": 14 }
+      ]
+    },
+    {
+      "id": "windows.recyclebin",
+      "name": "Recycle Bin (items older than configured days)",
+      "group": "Windows",
+      "default": true,
+      "actions": ["EmptyRecycleBin"]
+    },
+    {
+      "id": "windows.dnscache",
+      "name": "DNS resolver cache",
+      "group": "Windows",
+      "default": true,
+      "actions": ["CleanDNSCache"]
+    },
+    {
+      "id": "windows.deliveryoptimization",
+      "name": "Delivery Optimization cache",
+      "group": "Windows",
+      "default": true,
+      "actions": ["DeliveryOptimizationCache"]
+    },
+    {
+      "id": "windows.componentcleanup",
+      "name": "Component store cleanup (DISM, slow)",
+      "group": "Windows",
+      "default": false,
+      "actions": ["ComponentCleanup"]
+    },
+    {
+      "id": "edge.cache",
+      "name": "Microsoft Edge cache",
+      "group": "Browsers",
+      "default": true,
+      "activeProcesses": ["msedge"],
+      "detectFile": "%LocalAppData%\\Microsoft\\Edge\\User Data",
+      "fileKeys": [
+        { "path": "<EDGE_PROFILES>\\Cache", "patterns": ["*"], "recurse": true },
+        { "path": "<EDGE_PROFILES>\\Code Cache", "patterns": ["*"], "recurse": true },
+        { "path": "<EDGE_PROFILES>\\GPUCache", "patterns": ["*"], "recurse": true },
+        { "path": "<EDGE_PROFILES>\\Service Worker\\CacheStorage", "patterns": ["*"], "recurse": true },
+        { "path": "%LocalAppData%\\Microsoft\\Edge\\User Data\\ShaderCache", "patterns": ["*"], "recurse": true },
+        { "path": "%LocalAppData%\\Microsoft\\Edge\\User Data\\GrShaderCache", "patterns": ["*"], "recurse": true }
+      ]
+    },
+    {
+      "id": "chrome.cache",
+      "name": "Google Chrome cache",
+      "group": "Browsers",
+      "default": true,
+      "activeProcesses": ["chrome"],
+      "detectFile": "%LocalAppData%\\Google\\Chrome\\User Data",
+      "fileKeys": [
+        { "path": "<CHROME_PROFILES>\\Cache", "patterns": ["*"], "recurse": true },
+        { "path": "<CHROME_PROFILES>\\Code Cache", "patterns": ["*"], "recurse": true },
+        { "path": "<CHROME_PROFILES>\\GPUCache", "patterns": ["*"], "recurse": true },
+        { "path": "<CHROME_PROFILES>\\Service Worker\\CacheStorage", "patterns": ["*"], "recurse": true },
+        { "path": "%LocalAppData%\\Google\\Chrome\\User Data\\ShaderCache", "patterns": ["*"], "recurse": true },
+        { "path": "%LocalAppData%\\Google\\Chrome\\User Data\\GrShaderCache", "patterns": ["*"], "recurse": true }
+      ]
+    },
+    {
+      "id": "brave.cache",
+      "name": "Brave cache",
+      "group": "Browsers",
+      "default": true,
+      "activeProcesses": ["brave"],
+      "detectFile": "%LocalAppData%\\BraveSoftware\\Brave-Browser\\User Data",
+      "fileKeys": [
+        { "path": "<BRAVE_PROFILES>\\Cache", "patterns": ["*"], "recurse": true },
+        { "path": "<BRAVE_PROFILES>\\Code Cache", "patterns": ["*"], "recurse": true },
+        { "path": "<BRAVE_PROFILES>\\GPUCache", "patterns": ["*"], "recurse": true }
+      ]
+    },
+    {
+      "id": "firefox.cache",
+      "name": "Mozilla Firefox cache",
+      "group": "Browsers",
+      "default": true,
+      "activeProcesses": ["firefox"],
+      "detectFile": "%AppData%\\Mozilla\\Firefox\\Profiles",
+      "fileKeys": [
+        { "path": "<FIREFOX_PROFILES>\\cache2", "patterns": ["*"], "recurse": true },
+        { "path": "<FIREFOX_PROFILES>\\startupCache", "patterns": ["*"], "recurse": true },
+        { "path": "<FIREFOX_PROFILES>\\shader-cache", "patterns": ["*"], "recurse": true }
+      ]
+    },
+    {
+      "id": "apps.devcaches",
+      "name": "Developer package caches (pip, npm) older than 30 days",
+      "group": "Applications",
+      "default": false,
+      "fileKeys": [
+        { "path": "%LocalAppData%\\pip\\cache", "patterns": ["*"], "recurse": true, "olderThanDays": 30 },
+        { "path": "%LocalAppData%\\npm-cache", "patterns": ["*"], "recurse": true, "olderThanDays": 30 }
+      ]
+    }
+  ]
+}

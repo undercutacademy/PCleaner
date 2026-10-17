@@ -1,0 +1,9 @@
+# Build output
+dist/
+# Compiled launcher stubs are produced by build\Build-Release.ps1 and shipped in the release zip
+/PCleaner.exe
+/Setup.exe
+# Local noise
+*.log
+Thumbs.db
+desktop.ini
