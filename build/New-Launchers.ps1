@@ -126,7 +126,8 @@ function Build-Stub([string]$Name, [string]$Script, [string]$Title, [string]$Des
     $code = $code.Replace('__ELEVATE_COMMENT__', $(if ($Elevate) { 'The window needs admin rights for services and system folders: relaunch this exe elevated once.' } else { 'Per-user installer: no elevation needed.' }))
     Set-Content -Path $src -Value $code -Encoding ASCII
     $out = Join-Path $root "$Name.exe"
-    & $csc /nologo /target:winexe /platform:anycpu /optimize+ /nowarn:0162 "/win32icon:$icon" "/out:$out" /reference:System.Windows.Forms.dll "/reference:$sma" $src
+    $manifest = Join-Path $root 'build\app.manifest'
+    & $csc /nologo /target:winexe /platform:anycpu /optimize+ /nowarn:0162 "/win32icon:$icon" "/win32manifest:$manifest" "/out:$out" /reference:System.Windows.Forms.dll "/reference:$sma" $src
     if ($LASTEXITCODE -ne 0) { throw "csc failed for $Name" }
     Remove-Item $src -Force
     Write-Host "Built $out ($((Get-Item $out).Length) bytes)"

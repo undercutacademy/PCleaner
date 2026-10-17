@@ -3,7 +3,10 @@
   Builds a GitHub release package: regenerates the icon, runs the tests, self-tests the launcher, zips dist\PCleaner-<version>.zip
 #>
 [CmdletBinding()]
-param([switch]$SkipTests)
+param([switch]$SkipTests, [switch]$WithExe)
+# -WithExe also compiles and packages Setup.exe / PCleaner.exe. Off by default: unsigned tiny .NET launchers draw
+# machine-learning antivirus flags (7/71 on VirusTotal) while the scripts and .cmd starters scan clean. Turn it on
+# once releases are code-signed (see marketing/signpath-application.md).
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $version = (Get-Content (Join-Path $root 'VERSION') | Select-Object -First 1).Trim()
@@ -13,7 +16,7 @@ $zip = Join-Path $dist "PCleaner-$version.zip"
 
 Write-Host "Building PCleaner $version" -ForegroundColor Cyan
 & (Join-Path $root 'build\New-Icon.ps1')
-& (Join-Path $root 'build\New-Launchers.ps1')
+if ($WithExe) { & (Join-Path $root 'build\New-Launchers.ps1') }
 
 if (-not $SkipTests) {
     Import-Module Pester -MinimumVersion 3.4
@@ -35,10 +38,13 @@ foreach ($f in Get-ChildItem $root -Recurse -Include *.ps1, *.psm1 | Where-Objec
 if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
 if (Test-Path $zip) { Remove-Item $zip -Force }
 New-Item -ItemType Directory -Path $stage -Force | Out-Null
-foreach ($item in 'src', 'config', 'installer', 'assets', 'docs', 'tests', 'build', 'Setup.exe', 'PCleaner.exe', 'README.md', 'LICENSE', 'VERSION') {
+$items = @('src', 'config', 'installer', 'assets', 'docs', 'tests', 'build', 'Setup.cmd', 'PCleaner.cmd', 'README.md', 'LICENSE', 'VERSION')
+if ($WithExe) { $items += 'Setup.exe', 'PCleaner.exe' }
+foreach ($item in $items) {
     $from = Join-Path $root $item
     if (Test-Path $from) { Copy-Item $from -Destination $stage -Recurse -Force }
 }
+Remove-Item (Join-Path $stage 'assets\screenshots') -Recurse -Force -ErrorAction SilentlyContinue   # README images, not needed at runtime
 Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zip -CompressionLevel Optimal
 Remove-Item $stage -Recurse -Force   # the zip is the artifact; keep dist\ tidy
 $hash = (Get-FileHash $zip -Algorithm SHA256).Hash

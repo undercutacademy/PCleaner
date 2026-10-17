@@ -1,5 +1,10 @@
 # winget submission
 
+**On hold.** winget needs a real installer binary inside the zip (`NestedInstallerType: exe`), and the unsigned
+launcher scores 7/71 on VirusTotal, so pull request microsoft/winget-pkgs#454966 was closed. Reopen this once
+releases are code-signed (see `signpath-application.md`): rebuild with `build\Build-Release.ps1 -WithExe`, refresh the
+hash below, and submit again.
+
 Manifests for 1.1.0 are in `marketing/winget/manifests/u/undercutacademy/PCleaner/1.1.0/`.
 Package id: `undercutacademy.PCleaner`. Once merged, users run:
 

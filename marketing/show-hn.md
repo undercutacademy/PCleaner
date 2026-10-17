@@ -23,9 +23,9 @@ What's in it:
 - Driver check that compares installed drivers against NVIDIA's lookup service, the ASUS support catalogue, and Windows Update. On my laptop it found a Wi-Fi driver two versions behind that Windows Update never mentioned.
 - Weekly scheduled run, HTML report plus JSON summary per run, light and dark themes.
 
-How it's built: Windows PowerShell 5.1 and WPF, nothing to install. The two .exe files are 37 KB launchers compiled with the C# compiler that ships in .NET Framework; they host the PowerShell engine in-process, and all logic is readable script. 44 Pester tests.
+How it's built: Windows PowerShell 5.1 and WPF, nothing to install. There are no executables in the download at all: it is the scripts plus two .cmd files that start them, so every file is readable and the whole zip scans 0 on VirusTotal [link]. 44 Pester tests.
 
-Honest limitations: vendor driver checks are automated for NVIDIA and ASUS only (others get a link), the exes are unsigned so SmartScreen warns once, and it is Windows-only by nature.
+Honest limitations: vendor driver checks are automated for NVIDIA and ASUS only (others get a link), Windows shows its "Open File - Security Warning" the first time you run a downloaded .cmd, and it is Windows-only by nature.
 
 How it came about: I reverse-engineered the installed CCleaner 7 with an AI reverse-engineering toolkit and Claude. The interesting findings: cleaning is a 769-section ini file, the driver updater sends your hardware IDs to a Gen Digital backend with a paid catalogue, and the "performance optimizer" is a program-sleeper that excludes antimalware protected processes. I did not copy their rule file (it is copyrighted); the rules here are an independent set. Design notes with the evidence are in docs/.
 
@@ -35,7 +35,7 @@ Happy to answer anything about the service-selection heuristics or the driver ma
 
 **Replies to have ready**
 
-- *"Why would I run a stranger's elevated script?"* You shouldn't blindly. Everything is readable PowerShell, the launcher exe is 37 KB, hosts PowerShell in-process rather than spawning it, and its source is in build/New-Launchers.ps1, and here is the VirusTotal result for the zip: [link]. Or skip the exe entirely: `powershell -File src\Invoke-Maintenance.ps1 -DryRun` runs read-only.
+- *"Why would I run a stranger's elevated script?"* You shouldn't blindly. Everything is readable PowerShell, there is no binary at all in the download, only scripts and two .cmd starters, and the zip scans clean on VirusTotal: [link]. Or skip the exe entirely: `powershell -File src\Invoke-Maintenance.ps1 -DryRun` runs read-only.
 - *"BleachBit exists."* It does, and it's good for cleaning. PCleaner adds the service taming and the vendor driver comparison, and keeps a weekly schedule with reports. Use whichever fits.
 - *"Registry cleaning?"* Deliberately absent. No measurable benefit, real breakage risk.
 - *"Why PowerShell 5.1 and not .NET/Rust?"* Because it is on every Windows machine already. No runtime, no installer dependencies, and anyone can read what it does before running it.

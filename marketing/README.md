@@ -9,7 +9,8 @@ Everything needed to launch PCleaner publicly. Start with `launch-plan.md`.
 | `x-post.md` | Main post plus reply thread |
 | `reddit/*.md` | One post per subreddit, with that sub's rules noted |
 | `directories.md` | AlternativeTo, MajorGeeks, Softpedia, editorial tips |
-| `winget.md` + `winget/` | Package manifests and the submission steps |
+| `winget.md` + `winget/` | Package manifests and the submission steps (on hold until code-signed) |
+| `signpath-application.md` | Free open-source code signing: what to submit and why it matters |
 | `devto-article.md` | Long-form write-up for dev.to / Hashnode / Medium |
 | `outreach-emails.md` | Three YouTube channel emails |
 

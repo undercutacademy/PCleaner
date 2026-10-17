@@ -18,7 +18,7 @@ Author here. Short version: CCleaner cleaned my saved passwords and autofill onc
 
 No ads, no account, no cloud, no "Pro" button. MIT licensed, source on GitHub, and it is plain PowerShell underneath so anyone can read what it does.
 
-Heads-up: the installer is unsigned, so SmartScreen will show "Windows protected your PC" the first time; click More info then Run anyway, or run the scripts directly from the zip.
+Heads-up: there is no installer exe. You double-click Setup.cmd, Windows asks once whether to run a file from the internet, and that's it. The whole zip is readable script and scans clean on VirusTotal.
 
 GitHub: https://github.com/undercutacademy/PCleaner
 

@@ -28,13 +28,13 @@ Email `tim@majorgeeks.com` (human review, tested in a VM, must be free or fairly
     NVIDIA, the laptop maker's catalogue and Windows Update. Browser passwords, autofill, cookies, history
     and bookmarks are on a hard never-delete list. No cloud, no license, no telemetry, no upsell.
 
-    Download (zip, Setup.exe inside): https://github.com/undercutacademy/PCleaner/releases/download/v1.1.0/PCleaner-1.1.0.zip
+    Download (zip, Setup.cmd inside; no executables): https://github.com/undercutacademy/PCleaner/releases/download/v1.1.0/PCleaner-1.1.0.zip
     SHA256: 7AEE81B26FA7C9DCB4030BFA093B7242BEC63CAE55605723BA55495337CA0BF6
     Source and README with screenshots: https://github.com/undercutacademy/PCleaner
     VirusTotal: [link]
 
     Requirements: Windows 10/11 with Windows PowerShell 5.1 (built in). Per-user install, listed in Settings > Apps.
-    Silent install for your VM: Setup.exe -Silent
+    Silent install for your VM: powershell -NoProfile -ExecutionPolicy Bypass -File installer\Install-PCleaner.ps1 -Silent
 
     Thanks for taking a look,
     [name]
@@ -49,4 +49,4 @@ These are editorial, not directories. Send a two-paragraph tip to news@neowin.ne
 
 ## winget
 
-See `winget.md`.
+On hold until releases are code-signed; see `winget.md`.

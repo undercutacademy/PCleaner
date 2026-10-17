@@ -15,6 +15,6 @@ Built this for my own ROG G14 after CCleaner wiped my saved passwords. Things th
 - Stops background services that are eating CPU or RAM while their app is not open (think vendor update agents), never Windows or security services, and you can undo it.
 - Standard junk cleanup: temp files, crash dumps (8 GB of kernel dumps on my machine, which was its own warning sign), logs, update caches, browser caches. Passwords, autofill, cookies and history are never touched.
 
-Free, MIT licensed, no account, no cloud, plain PowerShell underneath. Unsigned installer so SmartScreen warns once.
+Free, MIT licensed, no account, no cloud, plain PowerShell underneath. No executables in the download, so no SmartScreen drama: scripts and a Setup.cmd, zip scans clean on VirusTotal.
 
 https://github.com/undercutacademy/PCleaner

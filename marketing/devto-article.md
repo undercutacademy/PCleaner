@@ -25,7 +25,7 @@ Also in the logs: a "PC health" engine watching for slow boots, disk errors, Win
 
 Constraints I set myself: nothing to install, code anyone can read before running it elevated, and conservative defaults.
 
-That pointed at Windows PowerShell 5.1 for the engine and WPF (via `XamlReader`) for the window, both built into Windows. The two `.exe` files people double-click are 37 KB launchers compiled with the C# compiler that ships inside the .NET Framework; they host the PowerShell engine in-process instead of spawning a hidden powershell.exe, which is the pattern antivirus heuristics dislike. The layout is a straight clone of CCleaner's sidebar-and-page structure; the colours are black and silver with a light and a dark theme.
+That pointed at Windows PowerShell 5.1 for the engine and WPF (via `XamlReader`) for the window, both built into Windows. People double-click `Setup.cmd` or `PCleaner.cmd`, two-line batch files that start the scripts, so the download contains no executables at all. The layout is a straight clone of CCleaner's sidebar-and-page structure; the colours are black and silver with a light and a dark theme.
 
 Three parts:
 
@@ -42,10 +42,11 @@ Plus a weekly scheduled task, an HTML report and a JSON summary for every run, a
 - The first dry run on my own laptop reported 11 GB of junk. 8.5 GB of it was kernel crash dumps from the last few weeks, which is less a cleaning problem than a "something is crashing" problem. A cleaner that shows you the breakdown is more useful than one that just reports a big number.
 - GPU shader caches were 3 GB. CCleaner cleans them by default. Wiping them weekly means shader recompiles in every game, so PCleaner leaves them alone unless you opt in.
 - Windows stamps every inbox driver with the date 21 June 2006. Any "your driver is 20 years old" warning you've seen from a driver-updater tool is probably that.
+- I first shipped two 37 KB launcher executables compiled with the C# compiler that comes with .NET Framework. They scored 7 of 71 on VirusTotal on shape alone (Elastic, CrowdStrike and SentinelOne machine-learning verdicts), even after moving the PowerShell engine in-process and adding a manifest; the scripts scored 0. Unsigned tiny .NET stubs are guilty until signed, so the exes wait for code signing and the release ships `.cmd` starters that scan clean.
 - An AI-assisted build is fast at the first 90 percent. The remaining 10 percent (a regex with an unbalanced parenthesis, a closure capturing a validated parameter, a ComboBox that ignored the dark theme) only showed up by rendering the window to PNG and actually looking at it. Build the self-test and the screenshot switch early.
 
 ## Get it
 
 MIT licensed, Windows 10/11: https://github.com/undercutacademy/PCleaner
 
-Honest limitations: unsigned executables (SmartScreen warns once), vendor driver comparison automated only for NVIDIA and ASUS so far, and no registry cleaning on purpose. Issues from people with hardware I don't have are the most valuable thing you can send.
+Honest limitations: Windows asks once before running a downloaded `.cmd`, vendor driver comparison automated only for NVIDIA and ASUS so far, and no registry cleaning on purpose. Issues from people with hardware I don't have are the most valuable thing you can send.

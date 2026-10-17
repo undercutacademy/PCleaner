@@ -14,17 +14,19 @@ Plain Windows PowerShell 5.1, no dependencies, no cloud, no license, no telemetr
 ## Install
 
 1. Download the latest `PCleaner-x.y.z.zip` from Releases and extract it anywhere.
-2. Double-click `Setup.exe`.
+2. Double-click `Setup.cmd`. Windows asks once whether to run a file from the internet; choose Run.
 3. Choose desktop shortcut / weekly schedule / open now, then click **Install**.
 
 PCleaner is installed for your user account in `%LOCALAPPDATA%\Programs\PCleaner`, gets a Start
 Menu entry, and appears in Settings > Apps for uninstalling. Nothing is cleaned during install.
 
-Prefer not to install? Double-click `PCleaner.exe` to run the launcher straight from the folder.
+Prefer not to install? Double-click `PCleaner.cmd` to open the window straight from the folder.
 
-The two `.exe` files are small unsigned stubs that start the PowerShell scripts in `src\` and
-`installer\`; SmartScreen may show "Windows protected your PC" the first time (More info > Run
-anyway). All logic is readable script, nothing is compiled in.
+There are no executables in the download. `Setup.cmd` and `PCleaner.cmd` are two-line batch files
+that start the PowerShell scripts in `installer\` and `src\`, so every file in the zip is readable
+and the whole package scans clean on VirusTotal (link in the release notes). A compiled launcher
+exists in `build\` and will ship once releases are code-signed; unsigned tiny executables trip
+machine-learning antivirus heuristics even when they do nothing wrong.
 
 ## Using it
 
