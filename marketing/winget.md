@@ -1,25 +1,27 @@
 # winget submission
 
-**On hold.** winget needs a real installer binary inside the zip (`NestedInstallerType: exe`), and the unsigned
-launcher scores 7/71 on VirusTotal, so pull request microsoft/winget-pkgs#454966 was closed. Reopen this once
-releases are code-signed (see `signpath-application.md`): rebuild with `build\Build-Release.ps1 -WithExe`, refresh the
-hash below, and submit again.
-
 Manifests for 1.1.0 are in `marketing/winget/manifests/u/undercutacademy/PCleaner/1.1.0/`.
-Package id: `undercutacademy.PCleaner`. Once merged, users run:
+Package id: `undercutacademy.PCleaner`, installer type `inno` (the per-user `PCleaner-<version>-Setup.exe`).
+Once merged, users run:
 
     winget install undercutacademy.PCleaner
+
+History: the first PR (microsoft/winget-pkgs#454966) shipped a zip with a hand-compiled launcher exe and was
+closed when that exe drew antivirus heuristics. The Inno Setup installer replaces it; winget knows Inno's silent
+switches natively, so no `InstallerSwitches` are needed.
 
 ## Validate locally
 
     winget validate --manifest marketing\winget\manifests\u\undercutacademy\PCleaner\1.1.0
-    winget install --manifest marketing\winget\manifests\u\undercutacademy\PCleaner\1.1.0   # needs "Local manifest files" enabled in winget settings
 
 ## Submit
 
-1. Fork https://github.com/microsoft/winget-pkgs (once).
-2. Branch `undercutacademy.PCleaner-1.1.0`, copy the three yaml files to the same path inside the fork, commit, push.
-3. Open a PR titled `New package: undercutacademy.PCleaner version 1.1.0`. Tick the checklist boxes in the PR template (manifest validated, tested install, no duplicate package).
-4. Microsoft's bot validates the install in a VM; the installer must finish silently with `-Silent` and register the Apps & Features entry whose ProductCode is `PCleaner` (it does). Expect labels like `Validation-Completed`, then a human merge within a few days. Fix anything the bot flags by pushing to the same branch.
+1. The fork https://github.com/undercutacademy/winget-pkgs already exists (local clone in `/tmp/winget-pkgs` on the dev box).
+2. Branch `undercutacademy.PCleaner-1.1.0-inno` from `upstream/master`, copy the three yaml files to the same path, commit, push.
+3. Open a PR titled `New package: undercutacademy.PCleaner version 1.1.0` and tick the checklist in the template.
+4. Sign the Microsoft CLA when the bot asks (one click with your GitHub login). The bot then installs the package
+   silently in a VM and checks that the Apps & Features entry matches the `ProductCode`
+   (`{6C2D1F4B-9E3A-4B7C-8D05-1A2B3C4D5E6F}_is1`, Inno's standard form).
 
-For every future release: bump `PackageVersion`, the `InstallerUrl`, the `InstallerSha256` and the `DisplayVersion`, and open a new PR. `wingetcreate update undercutacademy.PCleaner -u <zip url> -v <version> --submit` automates that once the first package exists.
+For every future release: bump `PackageVersion`, `InstallerUrl`, `InstallerSha256` and `DisplayVersion`, or run
+`wingetcreate update undercutacademy.PCleaner -u <setup exe url> -v <version> --submit` once the first package exists.

@@ -18,7 +18,7 @@ vs BleachBit: BleachBit is a great cleaner and cleans more app-specific location
 
 vs CCleaner: no registry cleaner on purpose, no cookie/history/password cleaning on purpose, no upsell, no telemetry, no cloud.
 
-Tech: Windows PowerShell 5.1 + WPF, nothing to install. The download has no executables, just scripts and two .cmd starters; the zip scans 0/65 on VirusTotal (https://www.virustotal.com/gui/file/21011f960d227a67c9fd34fcf7cd4ad2a63c720158347f7b24b4d8703abc25b9).
+Tech: Windows PowerShell 5.1 + WPF, nothing to install. Per-user installer or portable zip; the zip has no executables at all and scans 0/65 on VirusTotal (https://www.virustotal.com/gui/file/21011f960d227a67c9fd34fcf7cd4ad2a63c720158347f7b24b4d8703abc25b9).
 
 Download: https://github.com/undercutacademy/PCleaner/releases/tag/v1.1.0
 Source: https://github.com/undercutacademy/PCleaner

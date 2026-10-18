@@ -13,20 +13,19 @@ Plain Windows PowerShell 5.1, no dependencies, no cloud, no license, no telemetr
 
 ## Install
 
-1. Download the latest `PCleaner-x.y.z.zip` from Releases and extract it anywhere.
-2. Double-click `Setup.cmd`. Windows asks once whether to run a file from the internet; choose Run.
-3. Choose desktop shortcut / weekly schedule / open now, then click **Install**.
+**Installer (recommended):** download `PCleaner-x.y.z-Setup.exe` from Releases and run it. It installs
+for your user account only (no admin prompt), adds a Start Menu entry and an optional desktop
+shortcut, shows up in Settings > Apps, and upgrades in place when a new version comes out. Your
+edited settings and rules are kept across upgrades. Nothing is cleaned during install.
 
-PCleaner is installed for your user account in `%LOCALAPPDATA%\Programs\PCleaner`, gets a Start
-Menu entry, and appears in Settings > Apps for uninstalling. Nothing is cleaned during install.
+**Portable:** download `PCleaner-x.y.z.zip`, extract it anywhere, double-click `PCleaner.cmd`. The
+zip contains no executables at all, only the scripts and two batch files that start them.
 
-Prefer not to install? Double-click `PCleaner.cmd` to open the window straight from the folder.
-
-There are no executables in the download. `Setup.cmd` and `PCleaner.cmd` are two-line batch files
-that start the PowerShell scripts in `installer\` and `src\`, so every file in the zip is readable
-and the whole package scans clean on VirusTotal ([0/65 for 1.1.0](https://www.virustotal.com/gui/file/21011f960d227a67c9fd34fcf7cd4ad2a63c720158347f7b24b4d8703abc25b9)). A compiled launcher
-exists in `build\` and will ship once releases are code-signed; unsigned tiny executables trip
-machine-learning antivirus heuristics even when they do nothing wrong.
+Both are unsigned for now, so Windows may show an "unknown publisher" prompt the first time. The
+installer is a standard Inno Setup package that contains nothing but the readable scripts in this
+repository; VirusTotal results for every release asset are linked in the release notes
+(portable zip 1.1.0: [0/65](https://www.virustotal.com/gui/file/21011f960d227a67c9fd34fcf7cd4ad2a63c720158347f7b24b4d8703abc25b9)).
+Code signing is the next step (see `marketing/signpath-application.md`).
 
 ## Using it
 

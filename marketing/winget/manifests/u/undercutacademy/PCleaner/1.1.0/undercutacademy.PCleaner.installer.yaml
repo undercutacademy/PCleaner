@@ -1,26 +1,22 @@
 # yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.9.0.schema.json
 PackageIdentifier: undercutacademy.PCleaner
 PackageVersion: 1.1.0
-InstallerType: zip
-NestedInstallerType: exe
-NestedInstallerFiles:
-- RelativeFilePath: Setup.exe
+InstallerType: inno
 Scope: user
 InstallModes:
-- silent
 - interactive
-InstallerSwitches:
-  Silent: -Silent
-  SilentWithProgress: -Silent
+- silent
+- silentWithProgress
 UpgradeBehavior: install
 AppsAndFeaturesEntries:
 - DisplayName: PCleaner
   Publisher: PCleaner authors
   DisplayVersion: 1.1.0
-  ProductCode: PCleaner
+  ProductCode: '{6C2D1F4B-9E3A-4B7C-8D05-1A2B3C4D5E6F}_is1'
+  InstallerType: inno
 Installers:
 - Architecture: x64
-  InstallerUrl: https://github.com/undercutacademy/PCleaner/releases/download/v1.1.0/PCleaner-1.1.0.zip
-  InstallerSha256: 9AC2B4AFFABA943E40FAEF1952E569D7FF80077DF960BDDA992D9270A3C20A1D
+  InstallerUrl: https://github.com/undercutacademy/PCleaner/releases/download/v1.1.0/PCleaner-1.1.0-Setup.exe
+  InstallerSha256: B545A940AF8C70F46BBFBB257022DBF7C6A8484586662BE26F3DD35B3F1566BD
 ManifestType: installer
 ManifestVersion: 1.9.0

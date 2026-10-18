@@ -3,7 +3,7 @@
 Goal: let people clean their PC for free, and get PCleaner recommended wherever "CCleaner alternative" comes up.
 
 The two things every post repeats (pick the order per audience):
-1. **Trust.** Passwords, autofill, cookies, history and bookmarks are on a hard never-delete list. Everything that runs is readable PowerShell; the download contains no executables, only scripts and two .cmd starters, and the zip scans clean on VirusTotal. No cloud, no license, no upsell, no telemetry.
+1. **Trust.** Passwords, autofill, cookies, history and bookmarks are on a hard never-delete list. Everything that runs is readable PowerShell; the installer is a standard Inno Setup package around readable scripts; the portable zip has no executables at all and scans 0/65 on VirusTotal. No cloud, no license, no upsell, no telemetry.
 2. **It does the CCleaner jobs that matter.** Junk cleaning, idle-service taming, and driver checks that actually compare against NVIDIA and your laptop maker, not just Windows Update.
 
 Secondary story, use it where people like it (HN, X, dev.to): it was built by reverse-engineering CCleaner 7 with an AI reverse-engineering toolkit and Claude, in a day, after getting annoyed that CCleaner wiped saved passwords.

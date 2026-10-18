@@ -18,9 +18,9 @@ What it does
 - Driver check that compares installed drivers with NVIDIA's lookup service, the ASUS support catalogue and Windows Update. Other laptop makers get a direct link rather than a guess.
 - Optional weekly scheduled run, HTML report and JSON summary per run, light and dark themes.
 
-What it is built with: Windows PowerShell 5.1 + WPF, nothing to install. No executables in the download: scripts plus two .cmd starters, and the zip scans 0/65 on VirusTotal (https://www.virustotal.com/gui/file/21011f960d227a67c9fd34fcf7cd4ad2a63c720158347f7b24b4d8703abc25b9). 44 tests.
+What it is built with: Windows PowerShell 5.1 + WPF, nothing to install. Standard per-user installer, or a portable zip with no executables at all (0/65 on VirusTotal, https://www.virustotal.com/gui/file/21011f960d227a67c9fd34fcf7cd4ad2a63c720158347f7b24b4d8703abc25b9). 44 tests.
 
-Limits: Windows only, Windows asks once before running a downloaded .cmd, vendor driver comparison automated for NVIDIA and ASUS only.
+Limits: Windows only, unsigned for now so Windows shows an unknown-publisher prompt once, vendor driver comparison automated for NVIDIA and ASUS only.
 
 Repo: https://github.com/undercutacademy/PCleaner
 Release zip: https://github.com/undercutacademy/PCleaner/releases/tag/v1.1.0
